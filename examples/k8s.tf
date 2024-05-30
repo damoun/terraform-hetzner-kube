@@ -3,7 +3,7 @@ provider "hcloud" {
 }
 
 module "hz-eu" {
-  source  = "damoun/hetzner/kube"
+  source = "damoun/hetzner/kube"
 
   providers = {
     hcloud = hcloud
@@ -21,14 +21,14 @@ module "hz-eu" {
     labels      = []
     taints      = []
     count       = 1
-  }, {
+    }, {
     name        = "control-plane-nbg1"
     server_type = "cax11"
     location    = "nbg1"
     labels      = []
     taints      = []
     count       = 1
-  }, {
+    }, {
     name        = "control-plane-hel1"
     server_type = "cax11"
     location    = "hel1"

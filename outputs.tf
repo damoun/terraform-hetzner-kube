@@ -1,4 +1,4 @@
 output "kubeconfig" {
-    value = kube.kubeconfig
-    sensitive = true
+  value     = kube.kubeconfig
+  sensitive = true
 }
