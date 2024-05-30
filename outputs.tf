@@ -1,4 +1,5 @@
 output "kubeconfig" {
-  value     = kube.kubeconfig
+  value     = module.kube.kubeconfig
+  description = "Value of the kubeconfig"
   sensitive = true
 }

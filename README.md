@@ -57,5 +57,5 @@ No resources.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_kubeconfig"></a> [kubeconfig](#output\_kubeconfig) | n/a |
+| <a name="output_kubeconfig"></a> [kubeconfig](#output\_kubeconfig) | Value of the kubeconfig |
 <!-- END_TF_DOCS -->
