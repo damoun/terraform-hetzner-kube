@@ -23,6 +23,50 @@
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.8.4 |
 | <a name="requirement_hcloud"></a> [hcloud](#requirement\_hcloud) | 1.47.0 |
 
+## Example
+
+```hcl
+provider "hcloud" {
+  token = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+}
+
+module "hz-eu" {
+  source = "damoun/hetzner/kube"
+
+  providers = {
+    hcloud = hcloud
+  }
+
+  ssh_public_key  = file("~/.ssh/id_rsa.pub")
+  ssh_private_key = file("~/.ssh/id_rsa")
+
+  region = "eu-central"
+
+  control_plane_nodepools = [{
+    name        = "control-plane-fsn1"
+    server_type = "cax11"
+    location    = "fsn1"
+    labels      = []
+    taints      = []
+    count       = 1
+    }, {
+    name        = "control-plane-nbg1"
+    server_type = "cax11"
+    location    = "nbg1"
+    labels      = []
+    taints      = []
+    count       = 1
+    }, {
+    name        = "control-plane-hel1"
+    server_type = "cax11"
+    location    = "hel1"
+    labels      = []
+    taints      = []
+    count       = 1
+  }]
+}
+```
+
 ## Providers
 
 No providers.
@@ -32,10 +76,6 @@ No providers.
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_kube"></a> [kube](#module\_kube) | kube-hetzner/kube-hetzner/hcloud | 2.14.0 |
-
-## Resources
-
-No resources.
 
 ## Inputs
 
@@ -58,4 +98,8 @@ No resources.
 | Name | Description |
 |------|-------------|
 | <a name="output_kubeconfig"></a> [kubeconfig](#output\_kubeconfig) | Value of the kubeconfig |
+
+## Resources
+
+No resources.
 <!-- END_TF_DOCS -->
