@@ -1,11 +1,12 @@
 variable "name" {
   description = "The name of the cluster."
   type        = string
+}
 
-  validation {
-    condition     = contains(["eu-central", "eu-east", "us-west"], var.region)
-    error_message = "Region must be \"eu-central\", \"eu-east\" or \"us-west\"."
-  }
+variable "hcloud_token" {
+  description = "The Hetzner Cloud API token."
+  type        = string
+  sensitive   = true
 }
 
 variable "ssh_public_key" {
@@ -32,13 +33,13 @@ variable "region" {
 variable "control_plane_nodepools" {
   description = "The number of control plane nodes."
   type = list(object({
-    name                       = string
+    name                       = optional(string, "control-plane")
     server_type                = string
     location                   = string
     backups                    = optional(bool)
-    labels                     = list(string)
-    taints                     = list(string)
-    count                      = number
+    labels                     = optional(list(string), [])
+    taints                     = optional(list(string), [])
+    count                      = optional(number, 1)
     swap_size                  = optional(string, "")
     zram_size                  = optional(string, "")
     kubelet_args               = optional(list(string), ["kube-reserved=cpu=250m,memory=1500Mi,ephemeral-storage=1Gi", "system-reserved=cpu=250m,memory=300Mi"])
@@ -57,27 +58,18 @@ variable "control_plane_nodepools" {
     )
     error_message = "Names in control_plane_nodepools must be unique."
   }
-
-  validation {
-    condition = alltrue([
-      for control_plane_node in var.control_plane_nodepools : contains(
-        (var.region == "eu-central" ? ["fsn1", "nbg1", "hel1"] : var.region == "us-east" ? ["ash"] : ["hil"]),
-      control_plane_node.location)
-    ])
-    error_message = "Location must be in the same region."
-  }
 }
 
 variable "agent_nodepools" {
   description = "The number of agent nodes."
   type = list(object({
-    name                       = string
+    name                       = optional(string, "agent")
     server_type                = string
     location                   = string
     backups                    = optional(bool)
     floating_ip                = optional(bool)
-    labels                     = list(string)
-    taints                     = list(string)
+    labels                     = optional(list(string), [])
+    taints                     = optional(list(string), [])
     longhorn_volume_size       = optional(number)
     swap_size                  = optional(string, "")
     zram_size                  = optional(string, "")
@@ -85,7 +77,7 @@ variable "agent_nodepools" {
     selinux                    = optional(bool, true)
     placement_group_compat_idx = optional(number, 0)
     placement_group            = optional(string, null)
-    count                      = optional(number, null)
+    count                      = optional(number, 1)
     nodes = optional(map(object({
       server_type                = optional(string)
       location                   = optional(string)
@@ -103,7 +95,6 @@ variable "agent_nodepools" {
       append_index_to_node_name  = optional(bool, true)
     })))
   }))
-  default = []
 
   validation {
     condition = length(
@@ -121,7 +112,6 @@ variable "agent_nodepools" {
     error_message = "Set either nodes or count per agent_nodepool, not both."
   }
 
-
   validation {
     condition = alltrue([for agent_nodepool in var.agent_nodepools :
       alltrue([for agent_key, agent_node in coalesce(agent_nodepool.nodes, {}) : can(tonumber(agent_key)) && tonumber(agent_key) == floor(tonumber(agent_key)) && 0 <= tonumber(agent_key) && tonumber(agent_key) < 154])
@@ -134,15 +124,6 @@ variable "agent_nodepools" {
     condition = sum([for agent_nodepool in var.agent_nodepools : length(coalesce(agent_nodepool.nodes, {})) + coalesce(agent_nodepool.count, 0)]) <= 100
     # 154 because the private ip is derived from tonumber(key) + 101. See private_ipv4 in agents.tf
     error_message = "Hetzner does not support networks with more than 100 servers."
-  }
-
-  validation {
-    condition = alltrue([
-      for agent_node in var.agent_nodepools : contains(
-        (var.region == "eu-central" ? ["fsn1", "nbg1", "hel1"] : var.region == "us-east" ? ["ash"] : ["hil"]),
-      agent_node.location)
-    ])
-    error_message = "Location must be in the same region."
   }
 }
 
@@ -164,15 +145,6 @@ variable "autoscaler_nodepools" {
   }))
 
   default = []
-
-  validation {
-    condition = alltrue([
-      for agent_node in var.agent_nodepools : contains(
-        (var.region == "eu-central" ? ["fsn1", "nbg1", "hel1"] : var.region == "us-east" ? ["ash"] : ["hil"]),
-      agent_node.location)
-    ])
-    error_message = "Location must be in the same region."
-  }
 }
 
 # https://docs.hetzner.com/dns-console/dns/general/recursive-name-servers/
