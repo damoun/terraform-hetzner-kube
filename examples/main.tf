@@ -1,5 +1,5 @@
 module "hz-eu" {
-  source = "../"
+  source = "damoun/kube/hetzner"
 
   hcloud_token = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
