@@ -1,39 +1,22 @@
-provider "hcloud" {
-  token = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-}
-
 module "hz-eu" {
-  source = "damoun/hetzner/kube"
+  source = "../"
 
-  providers = {
-    hcloud = hcloud
-  }
+  hcloud_token = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
-  ssh_public_key  = file("~/.ssh/id_rsa.pub")
-  ssh_private_key = file("~/.ssh/id_rsa")
+  name = "hz-eu"
+
+  ssh_public_key  = file("~/.ssh/id_ed25519.pub")
+  ssh_private_key = file("~/.ssh/id_ed25519")
 
   region = "eu-central"
 
   control_plane_nodepools = [{
-    name        = "control-plane-fsn1"
     server_type = "cax11"
     location    = "fsn1"
-    labels      = []
-    taints      = []
-    count       = 1
-    }, {
-    name        = "control-plane-nbg1"
+  }]
+
+  agent_nodepools = [{
     server_type = "cax11"
-    location    = "nbg1"
-    labels      = []
-    taints      = []
-    count       = 1
-    }, {
-    name        = "control-plane-hel1"
-    server_type = "cax11"
-    location    = "hel1"
-    labels      = []
-    taints      = []
-    count       = 1
+    location    = "fsn1"
   }]
 }
