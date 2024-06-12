@@ -15,10 +15,10 @@ jobs:
 
     steps:
       - name: Clone repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4
 
       - name: Install tools
-        uses: asdf-vm/actions/install@v3
+        uses: asdf-vm/actions/install@05e0d2ed97b598bfce82fd30daf324ae0c4570e6 # v3
 
       - name: Terraform
         run: terraform fmt -check -recursive
