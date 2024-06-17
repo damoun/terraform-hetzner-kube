@@ -27,7 +27,7 @@
 
 ```hcl
 module "hz-eu" {
-  source = "../"
+  source = "damoun/kube/hetzner"
 
   hcloud_token = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
@@ -72,6 +72,7 @@ No providers.
 | <a name="input_firewall_kube_api_source"></a> [firewall\_kube\_api\_source](#input\_firewall\_kube\_api\_source) | Source networks that have Kube API access to the servers. | `list(string)` | <pre>[<br>  "0.0.0.0/0",<br>  "::/0"<br>]</pre> | no |
 | <a name="input_firewall_ssh_source"></a> [firewall\_ssh\_source](#input\_firewall\_ssh\_source) | Source networks that have SSH access to the servers. | `list(string)` | <pre>[<br>  "0.0.0.0/0",<br>  "::/0"<br>]</pre> | no |
 | <a name="input_hcloud_token"></a> [hcloud\_token](#input\_hcloud\_token) | The Hetzner Cloud API token. | `string` | n/a | yes |
+| <a name="input_ingress_controller"></a> [ingress\_controller](#input\_ingress\_controller) | Ingress controller to install. Disabled by default. | `string` | `"none"` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of the cluster. | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | The region where the cluster should be created. | `string` | n/a | yes |
 | <a name="input_ssh_private_key"></a> [ssh\_private\_key](#input\_ssh\_private\_key) | SSH private Key. | `string` | n/a | yes |
