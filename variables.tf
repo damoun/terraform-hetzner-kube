@@ -182,7 +182,7 @@ variable "ingress_controller" {
   type        = string
   default     = "none"
   validation {
-    condition = contains(["traefik", "nginx", "haproxy", "none"], var.ingress_controller)
+    condition     = contains(["traefik", "nginx", "haproxy", "none"], var.ingress_controller)
     error_message = "Only Nginx, Traefik or HAProxy are supported ingress controller."
   }
 }
