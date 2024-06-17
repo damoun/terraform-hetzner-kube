@@ -176,3 +176,13 @@ variable "etcd_s3_backup" {
   sensitive   = true
   default     = {}
 }
+
+variable "ingress_controller" {
+  description = "Ingress controller to install. Disabled by default."
+  type        = string
+  default     = "none"
+  validation {
+    condition = contains(["traefik", "nginx", "haproxy", "none"], var.ingress_controller)
+    error_message = "Only Nginx, Traefik or HAProxy are supported ingress controller."
+  }
+}
