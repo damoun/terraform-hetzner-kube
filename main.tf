@@ -19,7 +19,7 @@ module "kube" {
 
   ingress_controller = var.ingress_controller
 
-  enable_klipper_metal_lb = "true"
+  enable_klipper_metal_lb = true
   enable_csi_driver_smb   = true
 
   allow_scheduling_on_control_plane = true
