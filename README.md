@@ -83,6 +83,7 @@ No providers.
 | Name | Description |
 |------|-------------|
 | <a name="output_kubeconfig"></a> [kubeconfig](#output\_kubeconfig) | Value of the kubeconfig |
+| <a name="output_ssh_key_id"></a> [ssh\_key\_id](#output\_ssh\_key\_id) | The ID of the SSH key on Hetzner Cloud. |
 
 ## Resources
 
