@@ -21,7 +21,7 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.8.4 |
-| <a name="requirement_hcloud"></a> [hcloud](#requirement\_hcloud) | 1.47.0 |
+| <a name="requirement_hcloud"></a> [hcloud](#requirement\_hcloud) | 1.48.0 |
 
 ## Example
 
