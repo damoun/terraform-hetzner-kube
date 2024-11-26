@@ -58,7 +58,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_kube"></a> [kube](#module\_kube) | kube-hetzner/kube-hetzner/hcloud | 2.14.4 |
+| <a name="module_kube"></a> [kube](#module\_kube) | kube-hetzner/kube-hetzner/hcloud | 2.15.3 |
 
 ## Inputs
 
